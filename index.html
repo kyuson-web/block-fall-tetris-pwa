@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Block Fall — 方塊迷陣</title>
+<link rel="manifest" href="manifest.json">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    background: #0f0f1a;
+    color: #e0e0ff;
+    font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  header { text-align: center; padding: 12px 0 4px; }
+  header h1 {
+    font-size: 22px;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #ff5f6d, #ffc371);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  #wrap {
+    display: flex;
+    gap: 14px;
+    padding: 10px;
+    align-items: flex-start;
+  }
+  canvas#board {
+    background: #08080f;
+    border: 2px solid #2a2a4a;
+    border-radius: 6px;
+    box-shadow: 0 0 24px rgba(120, 100, 255, 0.25);
+  }
+  .side {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 130px;
+  }
+  .panel {
+    background: #15152a;
+    border: 1px solid #2a2a4a;
+    border-radius: 6px;
+    padding: 10px;
+  }
+  .panel h2 { font-size: 11px; color: #8a8aff; letter-spacing: 1px; margin-bottom: 6px; }
+  .panel .val { font-size: 20px; font-weight: bold; color: #fff; }
+  canvas#next {
+    width: 100%;
+    height: 90px;
+    background: #08080f;
+    border-radius: 4px;
+  }
+  .btn {
+    background: #4a4aff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .btn:active { transform: scale(0.96); }
+  #pad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 10px;
+    max-width: 340px;
+    width: 100%;
+  }
+  #pad button {
+    background: #1e1e3a;
+    color: #cfcfff;
+    border: 1px solid #3a3a5a;
+    border-radius: 8px;
+    padding: 16px 0;
+    font-size: 20px;
+  }
+  #pad .hide { visibility: hidden; }
+  #msg {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    z-index: 10;
+  }
+  #msg.show { display: flex; }
+  #msg h2 { font-size: 30px; color: #ff5f6d; }
+</style>
+</head>
+<body>
+  <header><h1>🎮 BLOCK FALL</h1></header>
+  <div id="wrap">
+    <canvas id="board" width="300" height="600"></canvas>
+    <div class="side">
+      <div class="panel">
+        <h2>SCORE</h2>
+        <div class="val" id="score">0</div>
+      </div>
+      <div class="panel">
+        <h2>LEVEL</h2>
+        <div class="val" id="level">1</div>
+      </div>
+      <div class="panel">
+        <h2>LINES</h2>
+        <div class="val" id="lines">0</div>
+      </div>
+      <div class="panel">
+        <h2>BEST</h2>
+        <div class="val" id="best">0</div>
+      </div>
+      <div class="panel">
+        <h2>HOLD</h2>
+        <canvas id="hold" width="120" height="90"></canvas>
+        <button class="btn" id="holdBtn" style="margin-top:6px;padding:6px;font-size:12px;">Hold (C)</button>
+      </div>
+      <div class="panel">
+        <h2>NEXT</h2>
+        <canvas id="next" width="120" height="90"></canvas>
+      </div>
+      <button class="btn" id="startBtn">開始遊戲</button>
+    </div>
+  </div>
+  <div id="pad">
+    <button data-k="ArrowLeft">←</button>
+    <button data-k="ArrowUp">↻</button>
+    <button data-k="ArrowRight">→</button>
+    <button class="hide"></button>
+    <button data-k="ArrowDown">↓</button>
+    <button class="hide"></button>
+  </div>
+  <div id="msg">
+    <h2 id="msgTitle">Game Over</h2>
+    <div id="msgScore" style="font-size:18px;color:#fff;"></div>
+    <button class="btn" id="restartBtn">再玩一次</button>
+  </div>
+
+  <script src="game.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>
