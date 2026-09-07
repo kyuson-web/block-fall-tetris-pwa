@@ -1,0 +1,25 @@
+{
+  "name": "Block Fall — 方塊迷陣",
+  "short_name": "BlockFall",
+  "description": "快節奏的 Canvas 2D 俄羅斯方塊小遊戲，支援離線 PWA",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f0f1a",
+  "theme_color": "#4a4aff",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
